@@ -31,9 +31,7 @@ class IncomeAmountsController < ApplicationController
   end
 
   def income_form_params
-    params
-        .require(:form_income_form)
-        .permit(income_values_attributes: Form::IncomeValue::REGISTRABLE_ATTRIBUTES)
+    params.require(:form_income_form).permit(income_amounts_attributes: Form::IncomeAmount::REGISTRABLE_ATTRIBUTES)
   end
 
   def update

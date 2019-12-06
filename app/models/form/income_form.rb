@@ -7,7 +7,7 @@ class Form::IncomeForm < Form::Base
     self.income_amounts = incomes.map { |income| IncomeAmount.new(income_id: income.id) } unless income_amounts.present?
   end
 
-  def income_values_attributes=(attributes)
+  def income_amounts_attributes=(attributes)
     self.income_amounts = attributes.map do |_, income_value_attributes|
       Form::IncomeAmount.new(income_value_attributes).tap { |v| puts v}
     end
@@ -23,7 +23,7 @@ class Form::IncomeForm < Form::Base
     return false unless valid?
     IncomeAmount.transaction {
       self.income_amounts.select.each { |income_ammount|
-        a1 = IncomeValue.new(:income_id => income_ammount.income_id,
+        a1 = IncomeAmount.new(:income_id => income_ammount.income_id,
                              :year_month => income_ammount.year_month,
                              :value => income_ammount.value,
                              :description => income_ammount.description)
@@ -33,7 +33,7 @@ class Form::IncomeForm < Form::Base
     true
   end
 
-  def target_income_values
+  def target_income_amounts
     self.income_amounts.select { |v| '*' }
   end
 
